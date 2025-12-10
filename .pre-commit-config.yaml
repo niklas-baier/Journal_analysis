@@ -1,0 +1,11 @@
+# .pre-commit-config.yaml
+
+repos:
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Run Pytest
+        entry: pytest  # The command that Git will run
+        language: system
+        pass_filenames: false # We want to run all tests, not just for modified files
+        always_run: true

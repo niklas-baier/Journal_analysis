@@ -1,0 +1,32 @@
+# config.toml
+
+[general]
+# Logging configuration (e.g., set the minimum level for logs)
+log_level = "INFO"
+
+[paths]
+# Input data files
+raw_diary_data = "data/raw_diary_entries.csv"
+preprocessed_data_output = "data/preprocessed_diary.parquet"
+
+# Output for analysis results
+sentiment_report_output = "reports/sentiment_summary.json"
+word_frequency_report = "reports/word_freq.csv"
+
+# the time slice that should be analyzed default the last year
+[timeslice]
+start_date = 2023-12-12
+end_date = 2023-12-12
+[data_schema]
+# Pandas settings: Define the expected column names and types for consistency
+text_column = "EntryText"
+date_column = "EntryDate"
+date_format = "%Y-%m-%d"
+index_column = "ID"
+
+[nlp_model]
+# Hyperparameters for NLP analysis
+max_tokens = 512
+embedding_dim = 100
+stop_words_list = "resources/custom_stopwords.txt"
+sentiment_model = "vader"  # Could be "vader", "textblob", or a custom path
