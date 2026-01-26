@@ -174,3 +174,5 @@ def test_normalize_ratings_edge_cases():
     assert 'normalized_rating' in result_empty_df.columns, "Even an empty DataFrame should have the new column name."
     
     print("\n✅ All edge cases passed successfully!")'''
+=======
+>>>>>>> 27f53c7 (added the sleep monitoring)
