@@ -1,3 +1,11 @@
 data/
 tests/__pycache__/
 */__pycache__/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+.pytest_cache/
+.cache/
