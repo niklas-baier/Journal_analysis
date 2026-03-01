@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diary_analysis"
+version = "0.1.0"
+description = "Analysis of Obsidian diary entries"
+dependencies = [
+    "pandas",
+    "torch",
+    "sentence-transformers",
+    "psycopg2-binary",
+    "sqlalchemy",
+    "ollama",
+    "nltk"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["diary_analyzer*"]  
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
