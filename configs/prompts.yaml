@@ -1,0 +1,31 @@
+
+# Categorized prompts for food and drinks
+food:
+  categories:
+    - sweets
+    - meat
+    - vegetarian
+  prompts:
+    - "A food item that is generally high in sugar, such as a dessert, candy, or pastry."
+    - "A dish or ingredient consisting of animal flesh or poultry, like beef, chicken, or fish."
+    - "A food item that is made purely from plants, vegetables, fruits, or dairy, likely without any animal flesh."
+
+drinks:
+  categories:
+    - water
+    - cola like beverages
+    - beer
+    - wine
+    - cocktails
+    - shots
+    - juices
+    - coffee
+  prompts:
+    - "A completely non-alcoholic, unflavored beverage..."
+    - "A non-alcoholic, sugary, carbonated soft drink..."
+    - "An alcoholic beverage that is brewed from fermented grains..."
+    - "An alcoholic beverage made from the fermentation of grape juice..."
+    - "A prepared alcoholic mixed drink..."
+    - "A very small, undiluted serving of a high-proof distilled alcoholic spirit..."
+    - "A non-alcoholic beverage made by the extraction of natural fruits..."
+    - "A coffeine rich beverage often hot and made from roasted beans..."
