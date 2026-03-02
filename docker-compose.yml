@@ -1,0 +1,78 @@
+services:
+  journal-app:
+    build: .
+    privileged: true
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - TRANSFORMERS_CACHE=/app/model_cache
+      - TRANSFORMERS_OFFLINE=1
+      - HF_HUB_OFFLINE=1
+      - OLLAMA_BASE_URL=http://ollama:11434
+      # Database connection variables
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+    depends_on:
+      ollama:
+        condition: service_started
+      db:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+      - ./notebooks:/app/notebooks
+      - ./src:/app/src
+      - ./my_model:/app/model_cache
+      - ./my_local_gemma:/app/gemma_model
+      - /home/niklas/.cache/huggingface:/root/.cache/huggingface
+    runtime: nvidia  
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-service
+    # Pulls gemma:2b automatically on startup
+    entrypoint: /bin/sh
+    command: -c "ollama serve & sleep 10 && ollama pull gemma:2b && wait"
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  db:
+    image: postgres:15
+    container_name: journal_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ollama_data:
+  pgdata:
